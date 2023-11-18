@@ -7,8 +7,8 @@ import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import { FormControl, InputAdornment, InputLabel, OutlinedInput, Typography } from '@mui/material';
 
-export default function AddPrice(props: { list: { name: string, price: string }[], active:string,selectedIndex:number | undefined, setSelectedIndex: React.Dispatch<React.SetStateAction<number | undefined>> }) {
-   const [price,setPrice] = useState(props.list.filter((item, index)=>index === props.selectedIndex)[0].price)
+export default function AddPrice(props: { list: { name: string, price: string }[], active:string,selectedIndex:number | undefined, setSelectedIndex: React.Dispatch<React.SetStateAction<number | undefined>>,price: string,setPrice: React.Dispatch<React.SetStateAction<string>> }) {
+  
   const handleListItemClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     index: number,
@@ -27,7 +27,7 @@ export default function AddPrice(props: { list: { name: string, price: string }[
         >
           <ListItemText primary={item.name} secondary={
             <Typography variant="body2" style={{ color: '#2a81aa' }}>
-              {`€${price}`}
+              {`€${props.price}`}
             </Typography>
           } sx={{ display: "contents" }} />
         </ListItemButton>)}
@@ -38,7 +38,7 @@ export default function AddPrice(props: { list: { name: string, price: string }[
             id="outlined-adornment-amount"   
             type='number'    
             startAdornment={<InputAdornment position="start">EUR</InputAdornment>}
-            onChange={(e)=>{setPrice(e.target.value)}}
+            onChange={(e)=>{props.setPrice(e.target.value)}}
           />
         </FormControl>
     </div>

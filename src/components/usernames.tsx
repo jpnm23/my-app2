@@ -14,6 +14,7 @@ function Usernames() {
  const [searchQuery, setSearchQuery] = useState('');
  const [selectedIndex, setSelectedIndex] = React.useState<number | undefined>();
  const [isSelected, setIsSelected] = useState(false);
+ const [price,setPrice] = useState('')
  const [showAddPrice, setShowAddPrice] = useState(false);
  const [active, setActive] = useState("buy");
  const handleSearch = (event: { target: { value: React.SetStateAction<string>; }; }) => {
@@ -35,8 +36,8 @@ if (searchQuery) {
         <InputWithIcon handle={handleSearch}/>
         {active==="buy" && <UsernamesList list={filteredData} active={active} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex}/>}
         {active==="sell" && showAddPrice ===false && <UsernamesList list={UsernamesData.ownedUsernames} active={active} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex}/>}
-        {showAddPrice && <AddPrice list={UsernamesData.ownedUsernames} active={active} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex}/>}
-        <MainButton title={active} nextTitile="Next" selectedIndex={selectedIndex} isSelected={isSelected} setSelectedIndex={setSelectedIndex} setIsSelected={setIsSelected} setShowAddPrice={setShowAddPrice} setActive={setActive} showAddPrice={showAddPrice}/>
+        {showAddPrice && <AddPrice price={price} setPrice={setPrice} list={UsernamesData.ownedUsernames} active={active} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex}/>}
+        <MainButton price={price} title={active} list={avalibaleUsernames} ownedList={UsernamesData.ownedUsernames} setAvalibaleUsernames={setAvalibaleUsernames} nextTitile="Next" selectedIndex={selectedIndex} isSelected={isSelected} setSelectedIndex={setSelectedIndex} setIsSelected={setIsSelected} setShowAddPrice={setShowAddPrice} setActive={setActive} showAddPrice={showAddPrice}/>
     </div>
   );
 }
