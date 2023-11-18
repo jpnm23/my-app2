@@ -44,12 +44,15 @@ export default function MainButton(props: {
 		}
 		if (props.isSelected) {
 			props.setShowAddPrice(true);
-			props.setActive('sell');
+			props.setActive('sell'); 
 			props.setIsSelected(false);
 		} else {
-			const newUserName = { name: props.ownedList.filter((item, index) => index === props.selectedIndex)[0].name, price:props.price };
-      props.list.push(newUserName)
-      props.setAvalibaleUsernames(props.list)
+      const name=props.ownedList.filter((item, index) => index === props.selectedIndex)[0].name
+			const newUserName = { name: name, price:props.price };
+      let newArray =  props.list.filter(obj => obj.name !== name);
+      newArray.push(newUserName)
+
+      props.setAvalibaleUsernames(newArray)
 			props.setShowAddPrice(false);
 			props.setActive('buy');
 			props.setSelectedIndex(undefined);
