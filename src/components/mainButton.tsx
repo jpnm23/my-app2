@@ -13,7 +13,9 @@ export default function MainButton(props: {
 	showAddPrice: boolean;
 	setSelectedIndex: React.Dispatch<React.SetStateAction<number | undefined>>;
 	list: { name: string; price: string }[];
-  ownedList:{ name: string; price: string }[];
+	ownedList: { name: string; price: string }[];
+  handleToasterClick:() => void;
+  handleToasterSuccessClick:() => void;
 	setAvalibaleUsernames: React.Dispatch<
 		React.SetStateAction<
 			{
@@ -23,6 +25,10 @@ export default function MainButton(props: {
 		>
 	>;
 	price: string;
+  setownedUsernames:React.Dispatch<React.SetStateAction<{
+    name: string;
+    price: string;
+}[]>>
 }) {
 	const [isHover, setIsHover] = useState(false);
 
@@ -40,22 +46,36 @@ export default function MainButton(props: {
 	};
 	const handleClick = () => {
 		if (props.title === 'buy') {
+			const boughtUserName = props.list.filter((item, index) => index === props.selectedIndex)[0];
+			let exists = props.ownedList.some(
+				(obj) => obj.name === boughtUserName.name
+			);
+			if (exists) {
+        props.handleToasterClick();
+        return
+			}
+      props.ownedList.push(boughtUserName)
+      props.setownedUsernames(props.ownedList);
+      props.handleToasterSuccessClick();
 			return;
 		}
 		if (props.isSelected) {
 			props.setShowAddPrice(true);
-			props.setActive('sell'); 
+			props.setActive('sell');
 			props.setIsSelected(false);
+      return;
 		} else {
-      const name=props.ownedList.filter((item, index) => index === props.selectedIndex)[0].name
-			const newUserName = { name: name, price:props.price };
-      let newArray =  props.list.filter(obj => obj.name !== name);
-      newArray.push(newUserName)
+			const name = props.ownedList.filter((item, index) => index === props.selectedIndex)[0].name;
+			const newUserName = { name: name, price: props.price };
+			let newArray = props.list.filter((obj) => obj.name !== name);
+			newArray.push(newUserName);
 
-      props.setAvalibaleUsernames(newArray)
+			props.setAvalibaleUsernames(newArray);
 			props.setShowAddPrice(false);
 			props.setActive('buy');
 			props.setSelectedIndex(undefined);
+      props.handleToasterSuccessClick();
+      return;
 		}
 	};
 	const handleMouseLeave = () => {
@@ -72,7 +92,7 @@ export default function MainButton(props: {
 			onMouseEnter={handleMouseEnter}
 			onMouseLeave={handleMouseLeave}
 			onClick={() => {
-				handleClick()
+				handleClick();
 			}}>
 			{props.isSelected && !props.showAddPrice ? props.nextTitile : props.title}
 		</Button>
