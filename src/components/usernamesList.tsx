@@ -7,15 +7,13 @@ import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import { Typography } from '@mui/material';
 
-export default function UsernamesList(props: { list: { name: string, price: string }[] }) {
-
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
+export default function UsernamesList(props: { list: { name: string, price: string }[], active:string,selectedIndex:number | undefined, setSelectedIndex: React.Dispatch<React.SetStateAction<number | undefined>> }) {
 
   const handleListItemClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     index: number,
   ) => {
-    setSelectedIndex(index);
+    props.setSelectedIndex(index);
   };
 
   return (
@@ -24,13 +22,13 @@ export default function UsernamesList(props: { list: { name: string, price: stri
       <Divider />
       <List aria-label="usernames list" sx={{ display: "inline-block", width: "90%" }}>
         {props.list.map((item, index) => <ListItemButton
-          selected={selectedIndex === index}
+          selected={props.selectedIndex === index}
           onClick={(event) => handleListItemClick(event, index)}
           sx={{ justifyContent: "space-between" }}
         >
           <ListItemText primary={item.name} secondary={
             <Typography variant="body2" style={{ color: '#2a81aa' }}>
-              {`€${item.price}`}
+              {props.active ==='buy' && `€${item.price}`}
             </Typography>
           } sx={{ display: "contents" }} />
         </ListItemButton>)}

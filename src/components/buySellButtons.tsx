@@ -12,11 +12,14 @@ const bottonContainer = {
   alignItems: 'center',
 }
 
-export default function BuySellButtons(props:{active:string,setActive:React.Dispatch<React.SetStateAction<string>>}) {
+export default function BuySellButtons(props:{active:string,setActive:React.Dispatch<React.SetStateAction<string>>,setSelectedIndex: React.Dispatch<React.SetStateAction<number | undefined>>,setIsSelected:React.Dispatch<React.SetStateAction<boolean>>, setShowAddPrice:React.Dispatch<React.SetStateAction<boolean>>}) {
   const {active,setActive}=props
  
   const handleClick = (event: { target: { id: React.SetStateAction<string>; }; }) => {
     setActive(event.target.id);
+    props.setSelectedIndex(undefined);
+    props.setIsSelected(false);
+    props.setShowAddPrice(false);
   }
 
   const roundedButtonBuy = {

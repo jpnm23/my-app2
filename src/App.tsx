@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Usernames from './components/usernames'
 import { ThemeProvider, createTheme, makeStyles } from '@mui/material/styles';

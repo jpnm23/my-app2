@@ -1,20 +1,20 @@
 'use client';
 import * as React from 'react';
-import { ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/Button';
 import InputWithIcon from './searchBar'
 import BuySellButtons from './buySellButtons'
 import UsernamesList from './usernamesList'
 import MainButton from './mainButton'
 
 import { useState } from 'react';
-import avalaibleUsernamesData from '../Data/avalaibleUsernames.json'
+import UsernamesData from '../Data/avalaibleUsernames.json'
+import AddPrice from './addPrice';
 
 function Usernames() {
- const [avalibaleUsernames,setAvalibaleUsernames] = useState(avalaibleUsernamesData.availableUsernames);
+ const [avalibaleUsernames,setAvalibaleUsernames] = useState(UsernamesData.availableUsernames);
  const [searchQuery, setSearchQuery] = useState('');
+ const [selectedIndex, setSelectedIndex] = React.useState<number | undefined>();
+ const [isSelected, setIsSelected] = useState(false);
+ const [showAddPrice, setShowAddPrice] = useState(false);
  const [active, setActive] = useState("buy");
  const handleSearch = (event: { target: { value: React.SetStateAction<string>; }; }) => {
   setSearchQuery(event.target.value);
@@ -31,10 +31,12 @@ if (searchQuery) {
     <div>
         <h1>Buy & Sell Usernames</h1>
         <p>Personal, Business and Community presence.</p>
-        <BuySellButtons active={active} setActive={setActive}/>
+        <BuySellButtons active={active} setActive={setActive} setSelectedIndex={setSelectedIndex} setIsSelected={setIsSelected} setShowAddPrice={setShowAddPrice}/>
         <InputWithIcon handle={handleSearch}/>
-        <UsernamesList list={filteredData}/>
-        <MainButton title={active} />
+        {active==="buy" && <UsernamesList list={filteredData} active={active} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex}/>}
+        {active==="sell" && showAddPrice ===false && <UsernamesList list={UsernamesData.ownedUsernames} active={active} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex}/>}
+        {showAddPrice && <AddPrice list={UsernamesData.ownedUsernames} active={active} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex}/>}
+        <MainButton title={active} nextTitile="Next" selectedIndex={selectedIndex} isSelected={isSelected} setSelectedIndex={setSelectedIndex} setIsSelected={setIsSelected} setShowAddPrice={setShowAddPrice} setActive={setActive} showAddPrice={showAddPrice}/>
     </div>
   );
 }

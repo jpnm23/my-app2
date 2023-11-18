@@ -1,10 +1,9 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
-export default function MainButton(props:{title: string}) {
+export default function MainButton(props:{title: string,nextTitile: string, selectedIndex:number | undefined, isSelected:boolean,setIsSelected:React.Dispatch<React.SetStateAction<boolean>>, setShowAddPrice:React.Dispatch<React.SetStateAction<boolean>>, setActive:React.Dispatch<React.SetStateAction<string>>,showAddPrice:boolean,setSelectedIndex:React.Dispatch<React.SetStateAction<number | undefined>>}) {
     const [isHover, setIsHover] = useState(false);
 
     const roundedButton = {
@@ -23,14 +22,20 @@ export default function MainButton(props:{title: string}) {
    const handleMouseLeave = () => {
       setIsHover(false);
    };
-
+ useEffect(()=>{
+   if(props.title==="sell" && props.selectedIndex !== undefined)
+   {
+    props.setIsSelected(true)
+   }
+ },[props.selectedIndex])
   return (
     <Button 
         sx={ roundedButton } 
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onClick={()=>{if (props.title === "buy") {return} if(props.isSelected) {props.setShowAddPrice(true); props.setActive('sell'); props.setIsSelected(false)}else{props.setShowAddPrice(false); props.setActive('sell'); props.setSelectedIndex(undefined)}}}
     >
-        {props.title}
+         {props.isSelected && !props.showAddPrice ? props.nextTitile : props.title}
   </Button>
   );
 }

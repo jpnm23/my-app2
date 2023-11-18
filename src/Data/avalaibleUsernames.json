@@ -14,5 +14,10 @@
       {"name":"henrylopezofficial", "price": "1,99"},
       {"name":"lopeshenry", "price": "1,99"},
       {"name":"henrylovezlopez", "price": "1,99"}
+    ],
+    "ownedUsernames": [
+      {"name": "henrylopez2", "price": "0,00"},
+      {"name": "henrylopez3", "price": "0,00"},
+      {"name": "henrylopez4", "price": "0,00"}
     ]
 }
